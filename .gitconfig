@@ -1,0 +1,10 @@
+[user]
+	email = maicoqb@gmail.com
+	name = "Maico Borges"
+[status]
+	short = true
+	branch = true
+[format]
+	pretty = oneline
+[core]
+	autocrlf = input
