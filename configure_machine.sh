@@ -71,6 +71,7 @@ installFunctions() {
     echo "Copiando funções e aliases"
     cp ./.bash_functions ~/.bash_functions
     cp ./.bash_aliases ~/.bash_aliases
+    cp ./.gitconfig ~/.gitconfig
 
     if ! grep -q '~/.bash_functions' ~/.bashrc; then
         echo "Aplicando funções no .bashrc"
