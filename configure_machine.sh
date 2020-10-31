@@ -1,5 +1,6 @@
 
 CM_INTELLIJ_VERSION="2020.2.3"
+SCRIPT_DIR=$(dirname $(readlink -f "$0"))
 
 installDefault() {
     echo "Atualizando e instalando os pacotes padrao"
@@ -14,7 +15,6 @@ installDefault() {
         tree \
         build-essential \
         python2.7 \
-        python-pip \
         docker.io
 
     echo "Instalando nvm"
@@ -40,7 +40,7 @@ installVSCode() {
     echo "Instalando o VSCode"
     wget -O vscode.deb "https://go.microsoft.com/fwlink/?LinkID=760868"
     sudo apt install -y ./vscode.deb
-}   
+}
 
 installIntelliJ() {
     INTELLIJ_VERSION=$CM_INTELLIJ_VERSION
@@ -69,9 +69,9 @@ installIntelliJ() {
 
 installFunctions() {
     echo "Copiando funções e aliases"
-    cp ./.bash_functions ~/.bash_functions
-    cp ./.bash_aliases ~/.bash_aliases
-    cp ./.gitconfig ~/.gitconfig
+    cd $SCRIPT_DIR/.bash_functions ~/.bash_functions
+    cp $SCRIPT_DIR/.bash_aliases ~/.bash_aliases
+    cp $SCRIPT_DIR/.gitconfig ~/.gitconfig
 
     if ! grep -q '~/.bash_functions' ~/.bashrc; then
         echo "Aplicando funções no .bashrc"
@@ -82,6 +82,7 @@ fi
 
 PS1='${debian_chroot:+($debian_chroot)}:\[\033[01;34m\]\W\[\033[00m\]\$ '
 EOL
+    fi
 
 }
 
