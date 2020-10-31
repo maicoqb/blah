@@ -19,7 +19,7 @@ installDefault() {
 
     echo "Instalando nvm"
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
-    source ~/.bashrc
+    export NVM_DIR="$HOME/.nvm"
     nvm install node
 
     echo "Instalando sdkman e dependências"
@@ -69,7 +69,7 @@ installIntelliJ() {
 
 installFunctions() {
     echo "Copiando funções e aliases"
-    cd $SCRIPT_DIR/.bash_functions ~/.bash_functions
+    cp $SCRIPT_DIR/.bash_functions ~/.bash_functions
     cp $SCRIPT_DIR/.bash_aliases ~/.bash_aliases
     cp $SCRIPT_DIR/.gitconfig ~/.gitconfig
 
