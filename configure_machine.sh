@@ -92,6 +92,12 @@ installShortcuts() {
     python3 $SCRIPT_DIR/set_shortcut.py 'Open Chrome' '/opt/google/chrome/chrome' '<Control><Alt>N'
 }
 
+installCedilla() {
+    echo "Instalando o cedilha (ç)"
+    sudo locale-gen pt_BR.UTF-8
+    export LC_CTYPE=pt_BR.UTF-8
+    echo "export LC_CTYPE=pt_BR.UTF-8" >> ~/.profile
+}
 
 list="
 all
@@ -101,6 +107,7 @@ vscode
 intellij
 functions
 shortcuts
+cedilla
 "
 
 if ! $(echo $list | grep -qw "$1"); then
@@ -136,4 +143,10 @@ fi
 
 if [[ "$1" == "shortcuts" ]] || [[ "$1" == "all" ]]; then
     installShortcuts
+fi
+
+# Cedilla tem que ser instalado manualmente
+# se não pode gerar uma instalação não intencional
+if [[ "$1" == "cedilla" ]]; then
+    installCedilla
 fi
