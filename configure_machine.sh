@@ -14,8 +14,8 @@ installDefault() {
         curl \
         tree \
         build-essential \
-        python2.7 \
-        docker.io
+        docker.io \
+        python3-pip
 
     echo "Instalando nvm"
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
@@ -86,6 +86,12 @@ EOL
 
 }
 
+installShortcuts() {
+    echo "Criando atalhos"
+    
+    python3 $SCRIPT_DIR/set_shortcut.py 'Open Chrome' '/opt/google/chrome/chrome' '<Control><Alt>N'
+}
+
 
 list="
 all
@@ -94,35 +100,40 @@ chrome
 vscode
 intellij
 functions
+shortcuts
 "
 
 if ! $(echo $list | grep -qw "$1"); then
-  echo "Use um dos seguintes valores: $list"
-  exit 0
+    echo "Use um dos seguintes valores: $list"
+    exit 0
 fi
 
 if [[ ! -d /tmp/install ]]; then
-  sudo chown "$USER:$USER" /opt
-  mkdir -p /tmp/install
+    sudo chown "$USER:$USER" /opt
+    mkdir -p /tmp/install
 fi
 cd /tmp/install
 
 if [[ "$1" == "default" ]] || [[ "$1" == "all" ]]; then
-  installDefault
+    installDefault
 fi
 
 if [[ "$1" == "chrome" ]] || [[ "$1" == "all" ]]; then
-  installChrome
+    installChrome
 fi
 
 if [[ "$1" == "vscode" ]] || [[ "$1" == "all" ]]; then
-  installVSCode
+    installVSCode
 fi
 
 if [[ "$1" == "intellij" ]] || [[ "$1" == "all" ]]; then
-  installIntelliJ
+    installIntelliJ
 fi
 
 if [[ "$1" == "functions" ]] || [[ "$1" == "all" ]]; then
-  installFunctions
+    installFunctions
+fi
+
+if [[ "$1" == "shortcuts" ]] || [[ "$1" == "all" ]]; then
+    installShortcuts
 fi
