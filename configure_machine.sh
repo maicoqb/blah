@@ -93,6 +93,8 @@ installShortcuts() {
 }
 
 installCedilla() {
+    # Source https://askubuntu.com/a/605165
+
     echo "Instalando o cedilha (ç)"
     sudo locale-gen pt_BR.UTF-8
     export LC_CTYPE=pt_BR.UTF-8
@@ -141,7 +143,9 @@ if [[ "$1" == "functions" ]] || [[ "$1" == "all" ]]; then
     installFunctions
 fi
 
-if [[ "$1" == "shortcuts" ]] || [[ "$1" == "all" ]]; then
+# Cedilla tem que ser instalado manualmente
+# se não pode gerar uma instalação não intencional
+if [[ "$1" == "shortcuts" ]]; then
     installShortcuts
 fi
 
