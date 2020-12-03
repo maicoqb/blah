@@ -2,6 +2,8 @@
 CM_INTELLIJ_VERSION="2020.2.3"
 SCRIPT_DIR=$(dirname $(readlink -f "$0"))
 
+## VPN
+
 installDefault() {
     echo "Atualizando e instalando os pacotes padrao"
     sudo apt update
@@ -14,7 +16,6 @@ installDefault() {
         curl \
         tree \
         build-essential \
-        docker.io \
         python3-pip
 
     echo "Instalando nvm"
@@ -101,6 +102,31 @@ installCedilla() {
     echo "export LC_CTYPE=pt_BR.UTF-8" >> ~/.profile
 }
 
+installDocker() {
+    sudo apt remove docker docker-engine docker.io containerd runc
+    sudo apt install -y \
+        apt-transport-https \
+        ca-certificates \
+        curl \
+        gnupg-agent \
+        software-properties-common
+    
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+    sudo apt update
+    sudo apt install docker-ce docker-ce-cli containerd.io -y
+
+    sudo docker run hello-world
+
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+    sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+    sudo groupadd docker
+    sudo usermod -aG docker ${USER}
+    
+}
+
 list="
 all
 default
@@ -110,6 +136,7 @@ intellij
 functions
 shortcuts
 cedilla
+docker
 "
 
 if ! $(echo $list | grep -qw "$1"); then
@@ -141,6 +168,10 @@ fi
 
 if [[ "$1" == "functions" ]] || [[ "$1" == "all" ]]; then
     installFunctions
+fi
+
+if [[ "$1" == "docker" ]] || [[ "$1" == "all" ]]; then
+    installDocker
 fi
 
 # Cedilla tem que ser instalado manualmente
